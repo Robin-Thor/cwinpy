@@ -676,6 +676,10 @@ class PulsarParameters:
                 "Problem reading in pulsar parameter file '{}'".format(filename)
             )
 
+        #if code shit the bed, remove the two following lines containing TSTART and TEND
+        self["TSTART"] = 000000000.0  
+        self["TEND"] = 999999999.0
+
         self._pulsarparameters = pp
 
         # store copy of the contents of the par file
