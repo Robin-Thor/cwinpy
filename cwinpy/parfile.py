@@ -676,16 +676,26 @@ class PulsarParameters:
                 "Problem reading in pulsar parameter file '{}'".format(filename)
             )
 
-        #if code shit the bed, remove the two following lines containing TSTART and TEND
+        self._pulsarparameters = pp
+
         self["TSTART"] = 000000000.0  
         self["TEND"] = 999999999.0
-
-        self._pulsarparameters = pp
 
         # store copy of the contents of the par file
         with open(filename, "r") as fp:
             self._parcontent = fp.read()
-
+            lines = self._parcontent.split("\n")
+            for line in lines:
+                if "TSTART" in line:
+                    if line.split()[0] == "TSTART":
+                        self["TSTART"] = float(line.split()[-1])
+                    else:
+                        raise IOError(
+                            "Not a valid TSTART value. Please check syntax"
+                        )
+            for line in lines:
+                if "TEND" in line:
+                    self["TEND"] = float(line.split()[-1])         
     def get_error(self, name):
         """
         Return the error value for a particular parameter
