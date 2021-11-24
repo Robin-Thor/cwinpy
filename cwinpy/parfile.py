@@ -678,8 +678,8 @@ class PulsarParameters:
 
         self._pulsarparameters = pp
 
-        self["TSTART"] = 000000000.0  
-        self["TEND"] = 999999999.0
+        self["TSTART"] = 0000000000.0  
+        self["TDURATION"] = 9999999999.0
 
         # store copy of the contents of the par file
         with open(filename, "r") as fp:
@@ -694,8 +694,9 @@ class PulsarParameters:
                             "Not a valid TSTART value. Please check syntax"
                         )
             for line in lines:
-                if "TEND" in line:
-                    self["TEND"] = float(line.split()[-1])         
+                if "TDURATION" in line:
+                    self["TDURATION"] = float(line.split()[-1])
+
     def get_error(self, name):
         """
         Return the error value for a particular parameter
