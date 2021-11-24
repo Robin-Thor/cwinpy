@@ -156,6 +156,8 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
     # the parameters that are held as vectors
     VECTOR_PARAMS = ["F", "GLEP", "GLPH", "GLF0", "GLF1", "GLF2", "GLF0D", "GLTD", "FB"]
 
+    TRANSIENT_PARAMS = ["TSTART", "TDURATION"]
+
     def __init__(self, data, priors, likelihood="studentst", numba=False):
 
         super().__init__(dict())  # initialise likelihood class
@@ -206,6 +208,7 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
                 not in self.AMPLITUDE_PARAMS
                 + self.BINARY_PARAMS
                 + self.POSITIONAL_PARAMETERS
+                + self.TRANSIENT_PARAMS
             ) and not self._is_vector_param(key.upper()):
                 raise ValueError("Unknown parameter '{}' being used!".format(key))
 
@@ -264,8 +267,7 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
 
         # if phase evolution is not in the model set the pre-summed products
         # of the data and antenna patterns
-        if not self.include_phase:
-            self.dot_products()
+        self.dot_products()
 
     @property
     def likelihood(self):
