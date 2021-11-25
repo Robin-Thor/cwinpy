@@ -392,7 +392,7 @@ class HeterodynedCWSimulator(object):
             parupdate = self.hetpar
 
         # get signal amplitude model
-        self.__nonGR = self._check_nonGR(parupdate)
+        self.__nonGR = self._check_nonGR(parupdate)   
         compstrain = lalpulsar.HeterodynedPulsarGetAmplitudeModel(
             parupdate.PulsarParameters(),
             freqfactor,
@@ -402,9 +402,18 @@ class HeterodynedCWSimulator(object):
             self.gpstimes,
             self.resp,
         )
+        
+        transient = False
+        if "TSTART" in parupdate.keys():
+            mask = np.zeros(len(self.times))  #Creats a zero array with length of the data, not sure if i should use self.times or compstrain.data.data
+            idx = np.argwhere((self.times > parupdate["TSTART"]) & (self.times < (parupdate["TSTART"] + parupdate["TDURATION"]))).flatten() #Finds the index where the time is larger than TSTART and less than TEND
+            mask[idx] = 1.0 #Sets the mask values at indexes with idx as 1.0
+            transient = True
+        else:
+            mask = 1.0
 
-        if (not outputampcoeffs and newpar is None) or roq or outputampcoeffs:
-            return compstrain.data.data
+        if (not outputampcoeffs and (newpar is None or transient)) or roq or outputampcoeffs:
+            return compstrain.data.data*mask #now multiplies with the mask
         else:
             from .heterodyne.fastheterodyne import fast_heterodyne
 
