@@ -402,13 +402,23 @@ class HeterodynedCWSimulator(object):
             self.gpstimes,
             self.resp,
         )
-        
+
+        if "TDURATION" in parupdate.keys() and "DECAY" in parupdate.keys():
+            raise IOError(
+                "parameter file cannot have both TDURATION and DECAY. Specify one"
+            )
+            
         transient = False
         if "TSTART" in parupdate.keys():
             mask = np.zeros(len(self.times))  #Creats a zero array with length of the data, not sure if i should use self.times or compstrain.data.data
-            idx = np.argwhere((self.times > parupdate["TSTART"]) & (self.times < (parupdate["TSTART"] + parupdate["TDURATION"]))).flatten() #Finds the index where the time is larger than TSTART and less than TEND
-            mask[idx] = 1.0 #Sets the mask values at indexes with idx as 1.0
-            transient = True
+            if "TDURATION" in parupdate.keys():
+                idx = np.argwhere((self.times > parupdate["TSTART"]) & (self.times < (parupdate["TSTART"] + parupdate["TDURATION"]))).flatten() 
+                mask[idx] = 1.0 
+                transient = True
+            if "DECAY" in parupdate.keys():
+                idx2 = np.argwhere((self.times > parupdate["TSTART"]))
+                mask[idx2] = (np.exp((parupdate["TSTART"] - self.times[idx2])/parupdate["DECAY"])) 
+                transient = True
         else:
             mask = 1.0
 

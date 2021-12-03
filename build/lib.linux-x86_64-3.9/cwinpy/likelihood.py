@@ -156,7 +156,7 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
     # the parameters that are held as vectors
     VECTOR_PARAMS = ["F", "GLEP", "GLPH", "GLF0", "GLF1", "GLF2", "GLF0D", "GLTD", "FB"]
 
-    TRANSIENT_PARAMS = ["TSTART", "TDURATION"]
+    TRANSIENT_PARAMS = ["TSTART", "TDURATION", "DECAY"]
 
     def __init__(self, data, priors, likelihood="studentst", numba=False):
 
