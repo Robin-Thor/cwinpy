@@ -1247,7 +1247,7 @@ class HeterodyneDAGRunner(object):
                 [earthephemeris, sunephemeris, timeephemeris], ["earth", "sun", "time"]
             ):
                 if (
-                    len(set([os.path.basename(edat[etype]) for etype in edat])) == 1
+                    len(set([os.path.basename(edat[etype]) for etype in edat])) != len(edat)
                     and len(edat) > 1
                 ):
                     for etype in edat:
