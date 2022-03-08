@@ -676,9 +676,7 @@ class PulsarParameters:
                 "Problem reading in pulsar parameter file '{}'".format(filename)
             )
 
-        self._pulsarparameters = pp
-
-        self["TSTART"] = 0000000000.0  
+        self._pulsarparameters = pp  
 
         # store copy of the contents of the par file
         with open(filename, "r") as fp:

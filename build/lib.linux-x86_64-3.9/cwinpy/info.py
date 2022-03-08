@@ -115,16 +115,16 @@ RUNTIMES["O3a"] = {
     "L1": [1238166018, 1253977218],
     "V1": [1238166018, 1253977218],
 }
-# RUNTIMES["O3b"] = {
-#    "H1": [1253977218, 1269363618],
-#    "L1": [1253977218, 1269363618],
-#    "V1": [1253977218, 1269363618],
-# }
-# RUNTIMES["O3"] = {
-#    "H1": [1238166018, 1269363618],
-#    "L1": [1238166018, 1269363618],
-#    "V1": [1238166018, 1269363618],
-# }
+RUNTIMES["O3b"] = {
+    "H1": [1253977218, 1269363618],
+    "L1": [1253977218, 1269363618],
+    "V1": [1253977218, 1269363618],
+ }
+RUNTIMES["O3"] = {
+    "H1": [1238166018, 1269363618],
+    "L1": [1238166018, 1269363618],
+    "V1": [1238166018, 1269363618],
+ }
 
 
 #: Start and end run times for continuous wave hardware injections (no injections for Virgo)
@@ -217,6 +217,7 @@ ANALYSIS_SEGMENTS = {
     "O1": {det: f"{det}_CBC_CAT1" for det in RUNTIMES["O1"]},
     "O2": {det: f"{det}_CBC_CAT1" for det in RUNTIMES["O2"]},
     "O3a": {det: f"{det}_CBC_CAT1" for det in HW_INJ_RUNTIMES["O3a"]},
+    "O3": {det: f"{det}_CBC_CAT1" for det in RUNTIMES["O3"]}
 }
 
 
@@ -275,6 +276,18 @@ CVMFS_GWOSC_DATA_TYPES = {
             "V1": "V1_GWOSC_O3a_16KHZ_R1",
         },
     },
+    "O3": {
+        "4k": {
+            "H1": "H1_GWOSC_O3_4KHZ_R1",
+            "L1": "L1_GWOSC_O3_4KHZ_R1",
+            "V1": "V1_GWOSC_O3_4KHZ_R1",
+        },
+        "16k": {
+            "H1": "H1_GWOSC_O3_16KHZ_R1",
+            "L1": "L1_GWOSC_O3_16KHZ_R1",
+            "V1": "V1_GWOSC_O3_16KHZ_R1",
+        },
+    },
 }
 
 #: data channel names in the GWOSC data frames
@@ -315,6 +328,18 @@ CVMFS_GWOSC_FRAME_CHANNELS = {
         },
     },
     "O3a": {
+        "4k": {
+            "H1": "H1:GWOSC-4KHZ_R1_STRAIN",
+            "L1": "L1:GWOSC-4KHZ_R1_STRAIN",
+            "V1": "V1:GWOSC-4KHZ_R1_STRAIN",
+        },
+        "16k": {
+            "H1": "H1:GWOSC-16KHZ_R1_STRAIN",
+            "L1": "L1:GWOSC-16KHZ_R1_STRAIN",
+            "V1": "V1:GWOSC-16KHZ_R1_STRAIN",
+        },
+    },
+    "O3": {
         "4k": {
             "H1": "H1:GWOSC-4KHZ_R1_STRAIN",
             "L1": "L1:GWOSC-4KHZ_R1_STRAIN",
